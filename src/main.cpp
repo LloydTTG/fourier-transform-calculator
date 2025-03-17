@@ -1,6 +1,15 @@
 #include <iostream>
-#include "include/DFT.h"
+#include "include/FT.h"
 #include "include/SignalReconstruction.h"
+
+
+CArray vectorToArray(CVector& input){
+    return CArray(input.data(), input.size());
+}
+
+CVector complexToVector(Complex& input){
+    return std::vector<Complex>{input};
+}
 
 int main(){
     int N;
@@ -20,7 +29,7 @@ int main(){
     }
 
     string choice;
-    cout << "Do you want to compute DFT or IDFT?: ";
+    cout << "Do you want to compute DFT, IDFT or FFT?: ";
     cin >> choice;
 
     if (choice == "DFT"){
@@ -29,10 +38,26 @@ int main(){
         cout << "Reconstructed Signal Components: \n";
         originalFunc(output, N);
     }
+
     else if (choice == "IDFT"){
-        cout << "IDFT Outputs (original samples): ";
+        cout << "IDFT Outputs (original samples): \n";
         IDFT(input);
     }
-    return 0;
+
+    else if (choice == "FFT"){
+        cout << "FFT Outputs: \n";
+        CVector inputVect;
+        inputVect.reserve(N);
+        for (int i = 0; i < N; i++){
+        inputVect.push_back(input[i]);
+        }
+        CArray data = vectorToArray(inputVect);
+        FFT(data);
+
+        for (size_t a = 0; a < data.size(); a++){
+        cout << data[a] << endl;
+        }
     
+    }
+    return 0;
 }

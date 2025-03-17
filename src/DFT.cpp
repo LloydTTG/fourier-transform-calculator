@@ -1,4 +1,4 @@
-#include "include/DFT.h"
+#include "include/FT.h"
 #include <iostream>
 #include <cmath>
 
